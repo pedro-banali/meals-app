@@ -9,10 +9,11 @@ import { FlatList } from 'react-native-gesture-handler';
 import { setPlaneDetection } from 'expo/build/AR';
 import { Meal } from '../models/meal';
 import { MealItem } from '../components/MealItem';
+import { NavigationParams } from 'react-navigation';
 
-const CategoryMealsScreen: FC<any> &
-  StackNavigationProp &
-  StackNavigationConfig = ({ props, navigation }) => {
+const CategoryMealsScreen: FC<any> & NavigationParams = ({
+  navigation
+}) => {
   const renderMealItem = ({ item }: { item: Meal }) => {
     return (
       <MealItem
@@ -21,7 +22,12 @@ const CategoryMealsScreen: FC<any> &
         complexity={item.complexity}
         affordability={item.affordability}
         image={item.imageUrl}
-        onSelectMeal={() => {}}
+        onSelectMeal={() =>
+          navigation.navigate({
+            routeName: 'MealDetails',
+            params: { mealId: item.id }
+          })
+        }
       />
     );
   };

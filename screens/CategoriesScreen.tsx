@@ -1,19 +1,10 @@
 import React, { FC } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import {
-  StackNavigationConfig,
-  StackNavigationProp
-} from 'react-navigation-stack/lib/typescript/src/vendor/types';
-import { CATEGORIES } from '../data/dummy-data';
+import { FlatList, StyleSheet } from 'react-native';
+import { NavigationNavigatorProps, NavigationParams } from 'react-navigation';
 import { CategoryGridTile } from '../components/CategoryGridTile';
+import { CATEGORIES } from '../data/dummy-data';
 
-const CategoriesScreen: FC & StackNavigationProp & StackNavigationConfig = ({
+const CategoriesScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
   navigation
 }) => {
 

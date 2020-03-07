@@ -1,18 +1,50 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { NavigationNavigatorProps, NavigationParams } from 'react-navigation';
+import { MEALS } from '../data/dummy-data';
+import { CustomHeaderButtons } from '../components/HeaderButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
-const MealDetailsScreen: FC<any> = props => {
+const MealDetailsScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
+  navigation,
+  navigationOptions
+}) => {
+  const mealId = navigation.getParam('mealId');
+  const displayedMeal = MEALS.find(meal => meal.id === mealId);
+  navigationOptions = { headerTitle: 'buceta' };
   return (
     <View style={styles.screen}>
-      <Text>The Categories Screen!</Text>
+      {displayedMeal.ingredients.map((item, index) => (
+        <Text key={index}>{item}</Text>
+      ))}
       <Button
         title='Goo Back to Categories'
         onPress={() => {
-          props.navigation.popToTop();
+          navigation.popToTop();
         }}
       />
     </View>
   );
+};
+
+MealDetailsScreen.navigationOptions = ({ navigation }) => {
+  const mealId = navigation.getParam('mealId');
+  const displayedMeal = MEALS.find(meal => meal.id === mealId);
+  return {
+    headerTitle: displayedMeal.title,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButtons}>
+        <Item
+          title='favorite'
+          iconName='ios-star'
+          onPress={() => {
+            console.log('add as favorite');
+          }}
+        />
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 const styles = StyleSheet.create({
