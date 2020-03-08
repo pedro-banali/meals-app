@@ -1,49 +1,12 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import {
-  StackNavigationProp,
-  StackNavigationConfig
-} from 'react-navigation-stack/lib/typescript/src/vendor/types';
-import { CATEGORIES, MEALS } from '../data/dummy-data';
-import { FlatList } from 'react-native-gesture-handler';
-import { setPlaneDetection } from 'expo/build/AR';
-import { Meal } from '../models/meal';
-import { MealItem } from '../components/MealItem';
 import { NavigationParams } from 'react-navigation';
+import { MealList } from '../components/MealList';
+import { CATEGORIES, MEALS } from '../data/dummy-data';
 
-const CategoryMealsScreen: FC<any> & NavigationParams = ({
-  navigation
-}) => {
-  const renderMealItem = ({ item }: { item: Meal }) => {
-    return (
-      <MealItem
-        title={item.title}
-        duration={item.duration}
-        complexity={item.complexity}
-        affordability={item.affordability}
-        image={item.imageUrl}
-        onSelectMeal={() =>
-          navigation.navigate({
-            routeName: 'MealDetails',
-            params: { mealId: item.id }
-          })
-        }
-      />
-    );
-  };
-
+const CategoryMealsScreen: FC<any> & NavigationParams = ({ navigation }) => {
   const catId = navigation.getParam('categoryId');
   const displayedMeals = MEALS.filter(meal => meal.categoryId.includes(catId));
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={item => item.id}
-        renderItem={renderMealItem}
-        style={{ width: '100%' }}
-      />
-    </View>
-  );
+  return <MealList displayedMeals={displayedMeals} navigation={navigation} />;
 };
 
 CategoryMealsScreen.navigationOptions = navigationData => {
@@ -54,13 +17,5 @@ CategoryMealsScreen.navigationOptions = navigationData => {
     headerTitle: selectedCategory.title
   };
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 export default CategoryMealsScreen;
