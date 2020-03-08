@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Meal } from '../models/meal';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { DefaultText } from './DefaultText';
 
 export const MealItem: FC<{
   title: string;
@@ -25,9 +26,9 @@ export const MealItem: FC<{
             </ImageBackground>
           </View>
           <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-            <Text>{duration}m</Text>
-            <Text>{complexity}</Text>
-            <Text>{affordability}</Text>
+            <DefaultText>{duration}m</DefaultText>
+            <DefaultText>{complexity.toUpperCase()}</DefaultText>
+            <DefaultText>{affordability.toUpperCase()}</DefaultText>
           </View>
         </View>
       </TouchableOpacity>
