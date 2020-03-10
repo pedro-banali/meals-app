@@ -20,7 +20,7 @@ export const MealList: FC<{
         onSelectMeal={() =>
           navigation.navigate({
             routeName: 'MealDetail',
-            params: { mealId: item.id }
+            params: { mealId: item.id, mealTitle: item.title }
           })
         }
       />

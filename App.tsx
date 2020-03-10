@@ -3,15 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import MealsNavigator from './navigation/MealsNavigator';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 import { createStore, combineReducers } from 'redux';
 import mealsReducer from './store/reducer/meals';
-import Provider from 'react-redux';
+import { Provider } from 'react-redux';
 
 const rootReducer = combineReducers({ meals: mealsReducer });
 
 const store = createStore(rootReducer);
 
+enableScreens();
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),

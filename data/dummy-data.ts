@@ -1,7 +1,7 @@
-import { HashMap } from './../store/HashMap';
 import { Category } from '../models/category';
 import { Meal } from '../models/meal';
-import { HashMap } from '../store/HashMap';
+import { HashMap } from './../store/HashMap';
+
 
 export const CATEGORIES: Category[] = [
   new Category('c1', 'Italian', '#f5428d'),
