@@ -3,13 +3,19 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { Meal } from '../models/meal';
 import { NavigationParams } from 'react-navigation';
 import { MealItem } from './MealItem';
+import { useSelector } from 'react-redux';
+import { MealState } from '../store/reducer/meals';
 
 export const MealList: FC<{
   displayedMeals: Meal[];
   navigation: NavigationParams;
   style?: {};
 }> = ({ style, displayedMeals, navigation }) => {
+  const { favoriteMeals } = useSelector(
+    ({ meals }: { meals: MealState }) => meals
+  );
   const renderMealItem = ({ item }: { item: Meal }) => {
+    const isFavorite = !!favoriteMeals[item.id];
     return (
       <MealItem
         title={item.title}
@@ -20,7 +26,11 @@ export const MealList: FC<{
         onSelectMeal={() =>
           navigation.navigate({
             routeName: 'MealDetail',
-            params: { mealId: item.id, mealTitle: item.title }
+            params: {
+              mealId: item.id,
+              mealTitle: item.title,
+              isFav: isFavorite
+            }
           })
         }
       />

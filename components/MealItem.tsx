@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import { Meal } from '../models/meal';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DefaultText } from './DefaultText';
 

@@ -341,3 +341,8 @@ export const MEALS = [
 export const HASHED_MEALS: HashMap<Meal> = MEALS.reduce((previous: {}, mealItem: Meal) => {
   return { ...previous, [mealItem.id]: mealItem };
 }, {}) as HashMap<Meal>;
+
+
+export const HASHED_CATEGORIES: HashMap<Category> = CATEGORIES.reduce((previous: {}, category: Category) => {
+  return { ...previous, [category.id]: category };
+}, {}) as HashMap<Category>;

@@ -2,13 +2,22 @@ import React, { FC } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { NavigationNavigatorProps, NavigationParams } from 'react-navigation';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector } from 'react-redux';
 import { CategoryGridTile } from '../components/CategoryGridTile';
 import { CustomHeaderButtons } from '../components/HeaderButton';
-import { CATEGORIES } from '../data/dummy-data';
+import { CategoryState } from '../store/reducer/categories';
 
 const CategoriesScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
   navigation
 }) => {
+  const categories = useSelector(
+    ({ categories }: { categories: CategoryState }) => {
+      // console.log(categories);
+      return Object.values(categories.categories);
+      // return Object.keys(categories.categories).map(categoryId => categories[categoryId]);
+    }
+  );
+
   const renderGridItem = ({ item }) => {
     return (
       <CategoryGridTile
@@ -17,7 +26,7 @@ const CategoriesScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
         onSelect={() => {
           navigation.navigate({
             routeName: 'CategoryMeals',
-            params: { categoryId: item.id }
+            params: { categoryId: item.id, title: item.title }
           });
         }}
       />
@@ -26,7 +35,7 @@ const CategoriesScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
   return (
     <FlatList
       numColumns={2}
-      data={CATEGORIES}
+      data={categories}
       keyExtractor={item => item.id}
       renderItem={itemData => renderGridItem(itemData)}
     />

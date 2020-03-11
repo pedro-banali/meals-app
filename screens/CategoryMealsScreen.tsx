@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { NavigationParams } from 'react-navigation';
-import { MealList } from '../components/MealList';
-import { CATEGORIES, MEALS } from '../data/dummy-data';
 import { useSelector } from 'react-redux';
+import { MealList } from '../components/MealList';
 import { MealState } from '../store/reducer/meals';
-import { Store } from 'redux';
+import { DefaultText } from '../components/DefaultText';
+import { View, StyleSheet } from 'react-native';
 
 const CategoryMealsScreen: FC<any> & NavigationParams = ({ navigation }) => {
   const catId = navigation.getParam('categoryId');
@@ -16,16 +16,31 @@ const CategoryMealsScreen: FC<any> & NavigationParams = ({ navigation }) => {
   const displayedMeals = availableMeals.filter(
     meal => meal.categoryId.indexOf(catId) >= 0
   );
+  if (displayedMeals.length === 0 || !displayedMeals) {
+    return (
+      <View style={styles.content}>
+        <DefaultText>No meals found, maybe check your filters? </DefaultText>
+      </View>
+    );
+  }
+
   return <MealList displayedMeals={displayedMeals} navigation={navigation} />;
 };
 
 CategoryMealsScreen.navigationOptions = navigationData => {
-  const catId = navigationData.navigation.getParam('categoryId');
-  const selectedCategory = CATEGORIES.find(value => value.id === catId);
+  const title = navigationData.navigation.getParam('title');
 
   return {
-    headerTitle: selectedCategory.title
+    headerTitle: title
   };
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
 
 export default CategoryMealsScreen;

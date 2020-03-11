@@ -1,10 +1,12 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import { NavigationParams, NavigationNavigatorProps } from 'react-navigation';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { CustomHeaderButtons } from '../components/HeaderButton';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
+import { NavigationNavigatorProps, NavigationParams } from 'react-navigation';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch } from 'react-redux';
+import { CustomHeaderButtons } from '../components/HeaderButton';
 import Colors from '../constants/Color';
+import { setFilters } from '../store/actions/meal.actions';
 
 const FilterSwitch: FC<{
   label: string;
@@ -32,6 +34,8 @@ const FiltersScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
 
+  const dispatch = useDispatch();
+
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       isGlutenFree,
@@ -40,8 +44,8 @@ const FiltersScreen: FC<NavigationParams> & NavigationNavigatorProps = ({
       isVegetarian
     };
 
-    console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegetarian, isVegan]);
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegetarian, isVegan, dispatch]);
 
   useEffect(() => {
     navigation.setParams({ save: saveFilters });
